@@ -16,6 +16,10 @@ export const init = () => {
   canvas.setAttribute("height", height + "px");
 };
 
+export const clear = () => {
+  canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+};
+
 export const drawRec = (
   pos: IPosition,
   color: string,

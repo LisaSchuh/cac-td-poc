@@ -8,6 +8,7 @@
     "allowJs": true,
     "sourceMap": true,
     "baseUrl": "./src",
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@actors/*": ["actors/*"],
       "@models/*": ["models/*"],
