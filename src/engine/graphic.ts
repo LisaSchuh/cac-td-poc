@@ -1,19 +1,16 @@
 import { IPosition } from "@models/types";
+import { getScreenWidth, getScreenHeight } from "./utility";
 
 const canvas = <HTMLCanvasElement>document.getElementById("canvas");
 const canvasCtx = canvas.getContext("2d");
 
-export const init = () => {
-  const width =
-    window.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth;
-  const height =
-    window.innerHeight ||
-    document.documentElement.clientHeight ||
-    document.body.clientHeight;
-  canvas.setAttribute("width", width + "px");
-  canvas.setAttribute("height", height + "px");
+window.addEventListener("DOMContentLoaded", event => {
+  init();
+});
+
+const init = () => {
+  canvas.setAttribute("width", getScreenWidth() + "px");
+  canvas.setAttribute("height", getScreenHeight() + "px");
 };
 
 export const clear = () => {
