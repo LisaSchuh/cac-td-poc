@@ -1,27 +1,18 @@
 import { clear as clearGraphics } from "./graphic";
 
-export interface IJob {
-  work: (progress: number) => void;
-}
+export type JobFunc = (progress: number) => void;
 
-const jobs: IJob[] = [];
-
-let lastRender = 0;
-const loop = (timestamp: number) => {
-  var progress = timestamp - lastRender;
+const loop = (timestamp: number, lastRender: number, jobs: JobFunc[]) => {
+  const progress = timestamp - lastRender;
 
   clearGraphics();
 
-  jobs.forEach(j => j.work(progress));
+  jobs.forEach(j => j(progress));
 
-  lastRender = timestamp;
-  window.requestAnimationFrame(loop);
+  window.requestAnimationFrame(nextTimestamp =>
+    loop(nextTimestamp, timestamp, jobs)
+  );
 };
 
-export const start = () => {
-  window.requestAnimationFrame(loop);
-};
-
-export const addJob = (job: IJob) => {
-  jobs.push(job);
-};
+export const start = (jobs: JobFunc[]) =>
+  window.requestAnimationFrame((timestamp: number) => loop(timestamp, 0, jobs));

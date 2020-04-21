@@ -1,20 +1,24 @@
 import { IPosition } from "@models/types";
-import { getScreenWidth, getScreenHeight } from "./utility";
-
-const canvas = <HTMLCanvasElement>document.getElementById("canvas");
-const canvasCtx = canvas.getContext("2d");
+import {
+  getScreenWidth,
+  getScreenHeight,
+  getCanvasElement,
+  getCanvasContext
+} from "./constants";
 
 window.addEventListener("DOMContentLoaded", event => {
   init();
 });
 
 const init = () => {
+  const canvas = getCanvasElement();
   canvas.setAttribute("width", getScreenWidth() + "px");
   canvas.setAttribute("height", getScreenHeight() + "px");
 };
 
 export const clear = () => {
-  canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+  const canvas = getCanvasElement();
+  getCanvasContext().clearRect(0, 0, canvas.width, canvas.height);
 };
 
 export const drawRec = (
@@ -23,6 +27,7 @@ export const drawRec = (
   width: number,
   height: number
 ) => {
-  canvasCtx.fillStyle = color;
-  canvasCtx.fillRect(pos.x, pos.y, width, height);
+  const ctx = getCanvasContext();
+  ctx.fillStyle = color;
+  ctx.fillRect(pos.x, pos.y, width, height);
 };
