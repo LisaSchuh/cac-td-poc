@@ -5,9 +5,7 @@ export const useMouseClick = () => {
 
   useEffect(() => {
     if (clicked) {
-      setTimeout(() => {
-        setClicked(false);
-      });
+      setClicked(false);
     }
   }, [clicked]);
 

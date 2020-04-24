@@ -2,25 +2,36 @@ import "./Level.css";
 import React, { useState, useEffect } from "react";
 
 import { Stage, Layer } from "react-konva";
-import InnerSanctuary from "./entities/innerSanctuary";
+import { EInnerSanctuary } from "./entities/innerSanctuary";
+import { EPlayer } from "./entities/player";
 import Hud from "./hud/hud";
-import { GameSystem, GameObject, GameSystemFunction } from "./general/types";
+import { GameObjects } from "./general/types";
 import { usePlaceTowerSystem } from "./systems/placeTower";
+import { useLogic } from "./systems/logic";
+
+let prevGameState = {
+  collisions: {},
+  mouseClicked: false,
+  mousePosition: { x: 0, y: 0 },
+  crystals: 0,
+};
 
 function Level() {
-  const [gameObjects, setGameObjects] = useState<GameObject>({});
+  const [gameObjects, setGameObjects] = useState<GameObjects>({});
   const [placeTowerActive, setPlaceTowerActive] = useState<boolean>(false);
   const [initLevel, setinitLevel] = useState<boolean>(false);
 
   useEffect(() => {
     if (!initLevel) {
-      gameObjects["innerSanctuary"] = <InnerSanctuary></InnerSanctuary>;
+      gameObjects["innerSanctuary"] = EInnerSanctuary();
+      gameObjects["player"] = EPlayer();
       setGameObjects(gameObjects);
       setinitLevel(false);
     }
-  }, [initLevel]);
+  }, [initLevel, gameObjects]);
 
   usePlaceTowerSystem(gameObjects, placeTowerActive);
+  prevGameState = useLogic(gameObjects, {}, prevGameState);
 
   return (
     <>
@@ -31,7 +42,11 @@ function Level() {
       >
         <Layer>
           {Object.keys(gameObjects).map((s) => {
-            return gameObjects[s] ?? <></>;
+            return (
+              gameObjects[s]?.visuals(
+                gameObjects[s]?.physics.position ?? { x: 0, y: 0 }
+              ) ?? <></>
+            );
           })}
         </Layer>
       </Stage>
@@ -44,7 +59,7 @@ function Level() {
             },
           },
         ]}
-        statusBar={["Crystals 0"]}
+        statusBar={["Crystals " + prevGameState.crystals]}
       />
     </>
   );

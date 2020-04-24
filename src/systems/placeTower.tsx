@@ -1,29 +1,32 @@
 import { useMouseClick } from "../general/useMouseClick";
 import { useMousePosition } from "../general/useMousePosition";
-import { GameObject, GameSystemFunction, GameSystem } from "../general/types";
-import TowerPlacement from "../entities/towerPlacement";
+import { GameObjects, GameSystemFunction } from "../general/types";
+
 import { v4 as uuidv4 } from "uuid";
-import Tower from "../entities/tower";
-import React from "react";
+import { ETower } from "../entities/tower";
 
 const PLACEHOLDERTOWER = "towerPlacement";
 export const usePlaceTowerSystem: GameSystemFunction = (
-  gameObjects: GameObject,
+  gameObjects: GameObjects,
   active: boolean
 ) => {
   const mouseClicked = useMouseClick();
-  const postition = useMousePosition();
+  const mousePosition = useMousePosition();
 
   if (gameObjects[PLACEHOLDERTOWER] && !active) {
-    gameObjects[PLACEHOLDERTOWER] = null;
+    delete gameObjects[PLACEHOLDERTOWER];
   }
   if (!gameObjects[PLACEHOLDERTOWER] && active) {
-    gameObjects[PLACEHOLDERTOWER] = <TowerPlacement />;
+    gameObjects[PLACEHOLDERTOWER] = ETower();
+    gameObjects[PLACEHOLDERTOWER].physics.position = mousePosition;
   }
 
   if (active) {
+    gameObjects[PLACEHOLDERTOWER].physics.position = mousePosition;
     if (mouseClicked) {
-      gameObjects[uuidv4()] = <Tower {...postition} />;
+      const guid = uuidv4();
+      gameObjects[guid] = ETower();
+      gameObjects[guid].physics.position = mousePosition;
     }
   }
 };

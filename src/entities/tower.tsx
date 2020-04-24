@@ -1,11 +1,25 @@
 import React from "react";
 import { Rect } from "react-konva";
-import { IPosition } from "../general/types";
+import { IPosition, GameObject, GameState } from "../general/types";
 
 const width = 40;
 const height = 40;
 
-function Tower(props: IPosition) {
+export const ETower = (): GameObject => {
+  return {
+    visuals: (position: IPosition) => {
+      return <VTower {...position} />;
+    },
+    physics: {
+      position: { x: 0, y: 0 },
+      velocity: 0,
+      direction: { x: 0, y: 0 },
+      dimension: { width, height },
+    },
+    logic: (state: GameState) => state,
+  };
+};
+function VTower(props: IPosition) {
   return (
     <Rect
       x={props.x}
@@ -19,5 +33,3 @@ function Tower(props: IPosition) {
     />
   );
 }
-
-export default Tower;
