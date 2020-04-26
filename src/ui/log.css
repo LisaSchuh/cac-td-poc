@@ -1,0 +1,17 @@
+.log__element {
+  color: rgba(255, 255, 255, 1);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 1), 0 0 10px #72f1b8ff;
+  /* color: #f92aad;
+    text-shadow: 0 0 2px #100c0f, 2px 2px 15px #dc078ee0, 0 0 25px white; */
+  font-family: "neon80s";
+  font-size: 1.5em;
+  position: absolute;
+  right: 1em;
+  opacity: 1;
+}
+
+.log__element.log__element--fadeout {
+  transition: all 1s ease-in-out;
+  color: rgba(255, 255, 255, 0);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0), 0 0 10px #72f1b800;
+}

@@ -2,7 +2,7 @@ import { GameState } from "../general/types";
 
 import { v4 as uuidv4 } from "uuid";
 import { ETower } from "../entities/tower";
-import { registerActionToggledEvent } from "../general/events";
+import { registerActionToggledEvent, sendLogEvent } from "../general/events";
 
 const PLACEHOLDERTOWER = "towerPlacement";
 let active = false;
@@ -23,7 +23,7 @@ export const doPlaceTowerSystem = (gameState: GameState): GameState => {
   if (!gameState.gameObjects[PLACEHOLDERTOWER] && active) {
     gameState.gameObjects[PLACEHOLDERTOWER] = ETower();
     gameState.gameObjects[PLACEHOLDERTOWER].physics.position = mousePosition;
-    console.log(
+    sendLogEvent(
       "Move your mouse to place the defender, apparently not everyone is smart enough to get this... "
     );
   }
@@ -43,7 +43,7 @@ export const doPlaceTowerSystem = (gameState: GameState): GameState => {
       gameState.crystals -= 20;
     }
     if (mouseClicked && gameState.crystals < 20) {
-      console.log("Not enough money, get a job!");
+      sendLogEvent("Not enough money, get a job!");
     }
   }
   return gameState;

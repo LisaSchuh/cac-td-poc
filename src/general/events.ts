@@ -8,8 +8,24 @@ export const sendStatusChangedEvent = (crystals: number) => {
 };
 
 export const registerStatusChangedEvent = (fn: (crystals: number) => void) => {
-  document.body.addEventListener("statusChanged", (e: any) => {
-    fn(e.detail.crystals);
+  document.body.addEventListener("statusChanged", (e: Event) => {
+    e.stopPropagation();
+    fn((e as any).detail.crystals);
+  });
+};
+
+export const sendLogEvent = (message: string) => {
+  let event = new CustomEvent("log", {
+    detail: {
+      message,
+    },
+  });
+  document.body.dispatchEvent(event);
+};
+
+export const registerLogEvent = (fn: (message: string) => void) => {
+  document.body.addEventListener("log", (e: Event) => {
+    fn((e as any).detail.message);
   });
 };
 
@@ -27,6 +43,7 @@ export const registerActionToggledEvent = (
   fn: (action: string, active: boolean) => void
 ) => {
   document.body.addEventListener("actionToggled", (e: any) => {
-    fn(e.detail.name, e.detail.active);
+    e.stopPropagation();
+    fn((e as any).detail.name, e.detail.active);
   });
 };
