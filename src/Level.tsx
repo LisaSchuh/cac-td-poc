@@ -6,8 +6,12 @@ import { EInnerSanctuary } from "./entities/innerSanctuary";
 import { EPlayer } from "./entities/player";
 import Hud from "./hud/hud";
 import { GameObjects } from "./general/types";
-import { usePlaceTowerSystem } from "./systems/placeTower";
-import { useLogic } from "./systems/logic";
+import { doPlaceTowerSystem } from "./systems/placeTower";
+import { doLogic } from "./systems/logic";
+import { doPhysics } from "./systems/physics";
+import { doDrawing } from "./systems/drawing";
+import { doStatusCommunication } from "./systems/statusCommunication";
+import { cursorTo } from "readline";
 
 let prevGameState = {
   collisions: {},
@@ -16,53 +20,58 @@ let prevGameState = {
   crystals: 0,
 };
 
-function Level() {
-  const [gameObjects, setGameObjects] = useState<GameObjects>({});
-  const [placeTowerActive, setPlaceTowerActive] = useState<boolean>(false);
-  const [initLevel, setinitLevel] = useState<boolean>(false);
+let gameObjects: GameObjects = {};
+
+export const levelSetup = () => {
+  gameObjects["innerSanctuary"] = EInnerSanctuary();
+  gameObjects["player"] = EPlayer();
+};
+
+let animationFrameId = 0;
+export const levelStop = () => {
+  window.cancelAnimationFrame(animationFrameId);
+};
+
+export function levelStart(tFrame: number) {
+  animationFrameId = window.requestAnimationFrame(levelStart);
+
+  const collisions = doPhysics(gameObjects);
+  let newGameState = doLogic(gameObjects, collisions, prevGameState);
+  newGameState = doPlaceTowerSystem(gameObjects, newGameState);
+  doDrawing(gameObjects);
+  doStatusCommunication(newGameState, prevGameState);
+
+  prevGameState = newGameState;
+}
+
+export function LevelHud() {
+  const [crystals, setCrystals] = useState<number>(0);
 
   useEffect(() => {
-    if (!initLevel) {
-      gameObjects["innerSanctuary"] = EInnerSanctuary();
-      gameObjects["player"] = EPlayer();
-      setGameObjects(gameObjects);
-      setinitLevel(false);
-    }
-  }, [initLevel, gameObjects]);
-
-  usePlaceTowerSystem(gameObjects, placeTowerActive);
-  prevGameState = useLogic(gameObjects, {}, prevGameState);
+    document.body.addEventListener("statusChanged", (e: any) => {
+      setCrystals(e.detail.crystals);
+    });
+  }, []);
 
   return (
     <>
-      <Stage
-        width={window.innerWidth}
-        height={window.innerHeight}
-        className="base-level"
-      >
-        <Layer>
-          {Object.keys(gameObjects).map((s) => {
-            return (
-              gameObjects[s]?.visuals(
-                gameObjects[s]?.physics.position ?? { x: 0, y: 0 }
-              ) ?? <></>
-            );
-          })}
-        </Layer>
-      </Stage>
       <Hud
         actionBar={[
           {
             text: "+",
             action: (active) => {
-              setPlaceTowerActive(active);
+              let event = new CustomEvent("actionToggled", {
+                detail: {
+                  name: "placeTower",
+                  active: true,
+                },
+              });
+              document.body.dispatchEvent(event);
             },
           },
         ]}
-        statusBar={["Crystals " + prevGameState.crystals]}
+        statusBar={[`Crystals ${crystals}`]}
       />
     </>
   );
 }
-
-export default Level;

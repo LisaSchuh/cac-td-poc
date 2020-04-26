@@ -1,3 +1,5 @@
+import Konva from "konva";
+
 export interface IPosition {
   x: number;
   y: number;
@@ -11,10 +13,6 @@ export interface IDimension {
 export interface IHash<T> {
   [key: string]: T;
 }
-export type GameSystemFunction = (
-  gameObjects: GameObjects,
-  remove: boolean
-) => void;
 
 export interface PhysicObject {
   position: IPosition;
@@ -33,7 +31,7 @@ export interface GameState {
 }
 
 export interface GameObject {
-  visuals: (position: IPosition) => JSX.Element;
+  visuals: (position: IPosition) => Konva.Shape;
   physics: PhysicObject;
   logic: (state: GameState) => GameState;
 }

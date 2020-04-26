@@ -17,11 +17,11 @@ function Hud(props: IHudProps) {
     props.actionBar.map((aB) => (aB.toggled ? true : false))
   );
 
-  function toggleButtonCallAction(btn: IHudButton, index: number) {
+  const toggleButtonCallAction = (btn: IHudButton, index: number) => {
     buttonToggleState[index] = !buttonToggleState[index];
-    setButtonToggleState(buttonToggleState);
+    setButtonToggleState([...buttonToggleState]);
     btn.action(buttonToggleState[index]);
-  }
+  };
   return (
     <>
       <div className="status-bar">
@@ -38,7 +38,8 @@ function Hud(props: IHudProps) {
                 "action-bar__element" +
                 (buttonToggleState[index] ? " action-bar__element--active" : "")
               }
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 toggleButtonCallAction(button, index);
               }}
             >

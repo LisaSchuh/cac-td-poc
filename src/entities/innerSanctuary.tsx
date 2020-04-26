@@ -2,15 +2,14 @@ import React from "react";
 
 import { Rect } from "react-konva";
 import { IPosition, GameObject, GameState } from "../general/types";
+import Konva from "konva";
 
 const width = 100;
 const height = 100;
 
 export const EInnerSanctuary = (): GameObject => {
   return {
-    visuals: (position: IPosition) => {
-      return <VInnerSanctuary {...position}></VInnerSanctuary>;
-    },
+    visuals: VInnerSanctuary,
     physics: {
       position: {
         x: window.innerWidth / 2 - 50,
@@ -21,7 +20,11 @@ export const EInnerSanctuary = (): GameObject => {
       dimension: { width, height },
     },
     logic: function (state: GameState) {
-      if (state.mouseClicked) {
+      if (
+        state.mouseClicked &&
+        state.collisions["player"].filter((c) => c === "innerSanctuary")
+          .length > 0
+      ) {
         state.crystals += 10;
       }
       return state;
@@ -30,16 +33,14 @@ export const EInnerSanctuary = (): GameObject => {
 };
 
 function VInnerSanctuary(position: IPosition) {
-  return (
-    <Rect
-      x={position.x}
-      y={position.y}
-      width={width}
-      height={height}
-      fill={"#fff951"}
-      cornerRadius={5}
-      shadowBlur={10}
-      shadowColor={"#fff951"}
-    />
-  );
+  return new Konva.Rect({
+    x: position.x,
+    y: position.y,
+    width,
+    height,
+    fill: "#fff951",
+    cornerRadius: 5,
+    shadowBlur: 10,
+    shadowColor: "#fff951",
+  });
 }

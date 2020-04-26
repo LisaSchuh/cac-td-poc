@@ -1,14 +1,14 @@
-import { useMouseClick } from "../general/useMouseClick";
-import { useMousePosition } from "../general/useMousePosition";
+import { getMouseClick } from "../general/useMouseClick";
+import { getMousePosition } from "../general/useMousePosition";
 import { GameObjects, ICollisions, GameState } from "../general/types";
 
-export const useLogic = (
+export const doLogic = (
   gameObjects: GameObjects,
   collisions: ICollisions,
   prevGameState: GameState
 ): GameState => {
-  const mouseClicked = useMouseClick();
-  const mousePosition = useMousePosition();
+  const mouseClicked = getMouseClick();
+  const mousePosition = getMousePosition();
   let gameState = {
     collisions,
     mousePosition,

@@ -1,15 +1,12 @@
-import React from "react";
-import { Rect } from "react-konva";
 import { IPosition, GameObject, GameState } from "../general/types";
+import Konva from "konva";
 
 const width = 40;
 const height = 40;
 
 export const ETower = (): GameObject => {
   return {
-    visuals: (position: IPosition) => {
-      return <VTower {...position} />;
-    },
+    visuals: VTower,
     physics: {
       position: { x: 0, y: 0 },
       velocity: 0,
@@ -20,16 +17,14 @@ export const ETower = (): GameObject => {
   };
 };
 function VTower(props: IPosition) {
-  return (
-    <Rect
-      x={props.x}
-      y={props.y}
-      width={width}
-      height={height}
-      fill="#bbbbbb"
-      shadowBlur={4}
-      shadowColor={"#dedede"}
-      cornerRadius={5}
-    />
-  );
+  return new Konva.Rect({
+    x: props.x,
+    y: props.y,
+    width,
+    height,
+    fill: "#bbbbbb",
+    shadowBlur: 4,
+    shadowColor: "#dedede",
+    cornerRadius: 5,
+  });
 }

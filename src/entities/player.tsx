@@ -1,10 +1,13 @@
 import React from "react";
 import { IPosition, GameObject, GameState } from "../general/types";
+import Konva from "konva";
 
 export const EPlayer = (): GameObject => {
   return {
     visuals: (position: IPosition) => {
-      return <></>;
+      return new Konva.Shape({
+        sceneFunc(context, shape) {},
+      });
     },
     physics: {
       position: { x: 0, y: 0 },

@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
 
-export const useMouseClick = () => {
-  const [clicked, setClicked] = useState(false);
+let lastTimestamp = Date.now();
+let currentTimeStamp = Date.now();
 
-  useEffect(() => {
-    if (clicked) {
-      setClicked(false);
-    }
-  }, [clicked]);
-
-  useEffect(() => {
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
     const setFromEvent = () => {
-      setClicked(true);
+      currentTimeStamp = Date.now();
     };
 
     window.addEventListener("click", setFromEvent);
@@ -19,6 +15,12 @@ export const useMouseClick = () => {
     return () => {
       window.removeEventListener("click", setFromEvent);
     };
-  }, []);
+  },
+  false
+);
+
+export const getMouseClick = () => {
+  const clicked = lastTimestamp < currentTimeStamp ? true : false;
+  lastTimestamp = currentTimeStamp;
   return clicked;
 };
