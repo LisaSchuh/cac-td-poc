@@ -1,5 +1,9 @@
 import "./hud.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {
+  registerStatusChangedEvent,
+  sendActionToggledEvent,
+} from "../general/events";
 
 export interface IHudButton {
   text: string;
@@ -7,15 +11,22 @@ export interface IHudButton {
   toggled?: boolean;
 }
 
-export interface IHudProps {
-  actionBar: IHudButton[];
-  statusBar: string[];
-}
+function Hud() {
+  const [buttonToggleState, setButtonToggleState] = useState<boolean[]>([]);
+  const [crystals, setCrystals] = useState<number>(0);
 
-function Hud(props: IHudProps) {
-  const [buttonToggleState, setButtonToggleState] = useState<boolean[]>(
-    props.actionBar.map((aB) => (aB.toggled ? true : false))
-  );
+  const actionBar: IHudButton[] = [
+    {
+      text: "+",
+      action: (active) => {
+        sendActionToggledEvent("placeTower", active);
+      },
+    },
+  ];
+
+  useEffect(() => {
+    registerStatusChangedEvent((crystals) => setCrystals(crystals));
+  }, []);
 
   const toggleButtonCallAction = (btn: IHudButton, index: number) => {
     buttonToggleState[index] = !buttonToggleState[index];
@@ -25,13 +36,11 @@ function Hud(props: IHudProps) {
   return (
     <>
       <div className="status-bar">
-        {props.statusBar.map((text) => {
-          return <div className="status-bar__element">{text}</div>;
-        })}
+        <div className="status-bar__element">{`Crystals ${crystals}`}</div>
       </div>
 
       <div className="action-bar">
-        {props.actionBar.map((button, index) => {
+        {actionBar.map((button, index) => {
           return (
             <button
               className={

@@ -1,8 +1,9 @@
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import { levelSetup, levelStart, LevelHud } from "./Level";
+import { levelSetup, levelStart } from "./Level";
 import ReactDOM from "react-dom";
 import React from "react";
+import { LevelUI } from "./LevelUI";
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
@@ -21,7 +22,7 @@ levelStart(Date.now());
 
 ReactDOM.render(
   <React.StrictMode>
-    <LevelHud />
+    <LevelUI />
   </React.StrictMode>,
   document.getElementById("root")
 );

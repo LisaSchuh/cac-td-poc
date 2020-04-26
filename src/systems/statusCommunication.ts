@@ -1,15 +1,11 @@
 import { GameState } from "../general/types";
+import { sendStatusChangedEvent } from "../general/events";
 
 export const doStatusCommunication = (
   gameState: GameState,
   prevGameState: GameState
 ) => {
   if (gameState.crystals !== prevGameState.crystals) {
-    let event = new CustomEvent("statusChanged", {
-      detail: {
-        crystals: gameState.crystals,
-      },
-    });
-    document.body.dispatchEvent(event);
+    sendStatusChangedEvent(gameState.crystals);
   }
 };

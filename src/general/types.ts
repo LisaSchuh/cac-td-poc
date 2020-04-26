@@ -21,19 +21,24 @@ export interface PhysicObject {
   dimension: IDimension;
 }
 
+export interface IInput {
+  mousePosition: IPosition;
+  mouseClicked: boolean;
+}
+
 export type ICollisions = IHash<string[]>;
 
 export interface GameState {
   collisions: ICollisions;
-  mousePosition: IPosition;
-  mouseClicked: boolean;
+  input: IInput;
+  gameObjects: GameObjects;
   crystals: number;
 }
 
 export interface GameObject {
   visuals: (position: IPosition) => Konva.Shape;
   physics: PhysicObject;
-  logic: (state: GameState) => GameState;
+  logic: (state: GameState, prevState?: GameState) => GameState;
 }
 
 export type GameObjects = IHash<GameObject>;

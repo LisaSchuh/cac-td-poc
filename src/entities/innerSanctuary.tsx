@@ -1,6 +1,3 @@
-import React from "react";
-
-import { Rect } from "react-konva";
 import { IPosition, GameObject, GameState } from "../general/types";
 import Konva from "konva";
 
@@ -21,7 +18,7 @@ export const EInnerSanctuary = (): GameObject => {
     },
     logic: function (state: GameState) {
       if (
-        state.mouseClicked &&
+        state.input.mouseClicked &&
         state.collisions["player"].filter((c) => c === "innerSanctuary")
           .length > 0
       ) {

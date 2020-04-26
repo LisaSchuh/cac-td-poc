@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 let lastTimestamp = Date.now();
 let currentTimeStamp = Date.now();
 

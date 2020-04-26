@@ -1,30 +1,28 @@
 import "./Level.css";
-import React, { useState, useEffect } from "react";
 
-import { Stage, Layer } from "react-konva";
 import { EInnerSanctuary } from "./entities/innerSanctuary";
 import { EPlayer } from "./entities/player";
-import Hud from "./hud/hud";
-import { GameObjects } from "./general/types";
+import { GameState } from "./general/types";
 import { doPlaceTowerSystem } from "./systems/placeTower";
 import { doLogic } from "./systems/logic";
 import { doPhysics } from "./systems/physics";
 import { doDrawing } from "./systems/drawing";
 import { doStatusCommunication } from "./systems/statusCommunication";
-import { cursorTo } from "readline";
+import { doInput } from "./systems/input";
 
-let prevGameState = {
+let prevGameState: GameState = {
   collisions: {},
-  mouseClicked: false,
-  mousePosition: { x: 0, y: 0 },
+  input: {
+    mouseClicked: false,
+    mousePosition: { x: 0, y: 0 },
+  },
   crystals: 0,
+  gameObjects: {},
 };
 
-let gameObjects: GameObjects = {};
-
 export const levelSetup = () => {
-  gameObjects["innerSanctuary"] = EInnerSanctuary();
-  gameObjects["player"] = EPlayer();
+  prevGameState.gameObjects["innerSanctuary"] = EInnerSanctuary();
+  prevGameState.gameObjects["player"] = EPlayer();
 };
 
 let animationFrameId = 0;
@@ -35,43 +33,21 @@ export const levelStop = () => {
 export function levelStart(tFrame: number) {
   animationFrameId = window.requestAnimationFrame(levelStart);
 
-  const collisions = doPhysics(gameObjects);
-  let newGameState = doLogic(gameObjects, collisions, prevGameState);
-  newGameState = doPlaceTowerSystem(gameObjects, newGameState);
-  doDrawing(gameObjects);
-  doStatusCommunication(newGameState, prevGameState);
+  let gameState: GameState = {
+    collisions: {},
+    input: {
+      mouseClicked: false,
+      mousePosition: { x: 0, y: 0 },
+    },
+    crystals: prevGameState.crystals,
+    gameObjects: prevGameState.gameObjects,
+  };
+  gameState.input = doInput();
+  gameState.collisions = doPhysics(gameState.gameObjects);
+  gameState = doLogic(gameState, prevGameState);
+  gameState = doPlaceTowerSystem(gameState);
+  doDrawing(gameState.gameObjects);
+  doStatusCommunication(gameState, prevGameState);
 
-  prevGameState = newGameState;
-}
-
-export function LevelHud() {
-  const [crystals, setCrystals] = useState<number>(0);
-
-  useEffect(() => {
-    document.body.addEventListener("statusChanged", (e: any) => {
-      setCrystals(e.detail.crystals);
-    });
-  }, []);
-
-  return (
-    <>
-      <Hud
-        actionBar={[
-          {
-            text: "+",
-            action: (active) => {
-              let event = new CustomEvent("actionToggled", {
-                detail: {
-                  name: "placeTower",
-                  active: true,
-                },
-              });
-              document.body.dispatchEvent(event);
-            },
-          },
-        ]}
-        statusBar={[`Crystals ${crystals}`]}
-      />
-    </>
-  );
+  prevGameState = gameState;
 }

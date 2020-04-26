@@ -1,38 +1,35 @@
-import { getMousePosition } from "../general/useMousePosition";
-import { GameObjects, GameState } from "../general/types";
+import { GameState } from "../general/types";
 
 import { v4 as uuidv4 } from "uuid";
 import { ETower } from "../entities/tower";
+import { registerActionToggledEvent } from "../general/events";
 
 const PLACEHOLDERTOWER = "towerPlacement";
 let active = false;
 
-document.body.addEventListener("actionToggled", (e: any) => {
-  if (e.detail.name === "placeTower") {
-    active = e.detail.active;
+registerActionToggledEvent((action, active2) => {
+  if (action === "placeTower") {
+    active = active2;
   }
 });
 
-export const doPlaceTowerSystem = (
-  gameObjects: GameObjects,
-  gameState: GameState
-): GameState => {
-  const mouseClicked = gameState.mouseClicked;
-  const mousePosition = getMousePosition();
+export const doPlaceTowerSystem = (gameState: GameState): GameState => {
+  const mouseClicked = gameState.input.mouseClicked;
+  const mousePosition = gameState.input.mousePosition;
 
-  if (gameObjects[PLACEHOLDERTOWER] && !active) {
-    delete gameObjects[PLACEHOLDERTOWER];
+  if (gameState.gameObjects[PLACEHOLDERTOWER] && !active) {
+    delete gameState.gameObjects[PLACEHOLDERTOWER];
   }
-  if (!gameObjects[PLACEHOLDERTOWER] && active) {
-    gameObjects[PLACEHOLDERTOWER] = ETower();
-    gameObjects[PLACEHOLDERTOWER].physics.position = mousePosition;
+  if (!gameState.gameObjects[PLACEHOLDERTOWER] && active) {
+    gameState.gameObjects[PLACEHOLDERTOWER] = ETower();
+    gameState.gameObjects[PLACEHOLDERTOWER].physics.position = mousePosition;
     console.log(
       "Move your mouse to place the defender, apparently not everyone is smart enough to get this... "
     );
   }
 
   if (active) {
-    gameObjects[PLACEHOLDERTOWER].physics.position = mousePosition;
+    gameState.gameObjects[PLACEHOLDERTOWER].physics.position = mousePosition;
     if (
       mouseClicked &&
       gameState.crystals >= 20 &&
@@ -40,8 +37,8 @@ export const doPlaceTowerSystem = (
         .length === 0
     ) {
       const guid = uuidv4();
-      gameObjects[guid] = ETower();
-      gameObjects[guid].physics.position = mousePosition;
+      gameState.gameObjects[guid] = ETower();
+      gameState.gameObjects[guid].physics.position = mousePosition;
 
       gameState.crystals -= 20;
     }

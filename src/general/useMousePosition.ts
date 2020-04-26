@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { IPosition } from "./types";
 
 let position = { x: 0, y: 0 };

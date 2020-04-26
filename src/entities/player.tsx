@@ -1,4 +1,3 @@
-import React from "react";
 import { IPosition, GameObject, GameState } from "../general/types";
 import Konva from "konva";
 
@@ -16,7 +15,7 @@ export const EPlayer = (): GameObject => {
       dimension: { width: 1, height: 1 },
     },
     logic: function (state: GameState) {
-      this.physics.position = state.mousePosition;
+      this.physics.position = state.input.mousePosition;
       return state;
     },
   };

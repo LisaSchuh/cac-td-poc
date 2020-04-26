@@ -1,22 +1,11 @@
-import { getMouseClick } from "../general/useMouseClick";
-import { getMousePosition } from "../general/useMousePosition";
-import { GameObjects, ICollisions, GameState } from "../general/types";
+import { GameState } from "../general/types";
 
 export const doLogic = (
-  gameObjects: GameObjects,
-  collisions: ICollisions,
+  gameState: GameState,
   prevGameState: GameState
 ): GameState => {
-  const mouseClicked = getMouseClick();
-  const mousePosition = getMousePosition();
-  let gameState = {
-    collisions,
-    mousePosition,
-    mouseClicked,
-    crystals: prevGameState.crystals,
-  };
-  Object.keys(gameObjects).forEach((k) => {
-    gameState = gameObjects[k].logic(gameState);
+  Object.keys(gameState.gameObjects).forEach((k) => {
+    gameState = gameState.gameObjects[k].logic(gameState, prevGameState);
   });
 
   return gameState;
