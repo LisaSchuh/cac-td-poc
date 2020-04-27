@@ -5,7 +5,10 @@ export const doStatusCommunication = (
   gameState: GameState,
   prevGameState: GameState
 ) => {
-  if (gameState.crystals !== prevGameState.crystals) {
-    sendStatusChangedEvent(gameState.crystals);
+  if (
+    gameState.crystals !== prevGameState.crystals ||
+    gameState.health !== prevGameState.health
+  ) {
+    sendStatusChangedEvent(gameState.crystals, gameState.health);
   }
 };

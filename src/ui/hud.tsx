@@ -14,6 +14,7 @@ export interface IHudButton {
 function Hud() {
   const [buttonToggleState, setButtonToggleState] = useState<boolean[]>([]);
   const [crystals, setCrystals] = useState<number>(0);
+  const [health, setHealth] = useState<number>(1000);
 
   const actionBar: IHudButton[] = [
     {
@@ -25,7 +26,10 @@ function Hud() {
   ];
 
   useEffect(() => {
-    registerStatusChangedEvent((crystals) => setCrystals(crystals));
+    registerStatusChangedEvent((crystals, health) => {
+      setCrystals(crystals);
+      setHealth(health);
+    });
   }, []);
 
   const toggleButtonCallAction = (btn: IHudButton, index: number) => {
@@ -36,6 +40,7 @@ function Hud() {
   return (
     <>
       <div className="status-bar">
+        <div className="status-bar__element">{`Health ${health}`}</div>
         <div className="status-bar__element">{`Crystals ${crystals}`}</div>
       </div>
 

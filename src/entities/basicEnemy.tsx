@@ -1,12 +1,12 @@
 import { IPosition, GameObject, GameState } from "../general/types";
 import Konva from "konva";
 
-const width = 40;
-const height = 40;
+const width = 30;
+const height = 10;
 
-export const ETower = (): GameObject => {
+export const EBasicEnemy = (): GameObject => {
   return {
-    visuals: VTower,
+    visuals: VBasicEnemy,
     physics: {
       position: { x: 0, y: 0 },
       velocity: 0,
@@ -14,18 +14,18 @@ export const ETower = (): GameObject => {
       dimension: { width, height },
     },
     logic: (state: GameState) => state,
-    type: "TOWER",
+    type: "ENEMY",
   };
 };
-function VTower(props: IPosition) {
+function VBasicEnemy(props: IPosition) {
   return new Konva.Rect({
     x: props.x,
     y: props.y,
     width,
     height,
-    fill: "#bbbbbb",
-    shadowBlur: 4,
-    shadowColor: "#dedede",
+    fill: "#8c1eff",
+    shadowBlur: 8,
+    shadowColor: "white",
     cornerRadius: 5,
   });
 }

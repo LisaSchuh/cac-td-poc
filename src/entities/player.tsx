@@ -18,5 +18,6 @@ export const EPlayer = (): GameObject => {
       this.physics.position = state.input.mousePosition;
       return state;
     },
+    type: "PLAYER",
   };
 };

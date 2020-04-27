@@ -26,6 +26,7 @@ export const EInnerSanctuary = (): GameObject => {
       }
       return state;
     },
+    type: "INNERSANCTUARY",
   };
 };
 

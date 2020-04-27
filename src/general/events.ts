@@ -1,16 +1,19 @@
-export const sendStatusChangedEvent = (crystals: number) => {
+export const sendStatusChangedEvent = (crystals: number, health: number) => {
   let event = new CustomEvent("statusChanged", {
     detail: {
-      crystals: crystals,
+      crystals,
+      health,
     },
   });
   document.body.dispatchEvent(event);
 };
 
-export const registerStatusChangedEvent = (fn: (crystals: number) => void) => {
+export const registerStatusChangedEvent = (
+  fn: (crystals: number, health: number) => void
+) => {
   document.body.addEventListener("statusChanged", (e: Event) => {
     e.stopPropagation();
-    fn((e as any).detail.crystals);
+    fn((e as any).detail.crystals, (e as any).detail.health);
   });
 };
 
