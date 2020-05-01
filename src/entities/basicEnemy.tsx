@@ -29,7 +29,7 @@ function VBasicEnemy(props: IPosition) {
       // (!) Konva specific method, it is very important
       context.fillStrokeShape(shape);
     },
-    fill: "#f946AB ",
+    fill: "black",
     strokeWidth: 1,
     stroke: "#f946AB",
     cornerRadius: 2,
