@@ -18,7 +18,7 @@ function Hud() {
 
   const actionBar: IHudButton[] = [
     {
-      text: "+",
+      text: "Add",
       action: (active) => {
         sendActionToggledEvent("placeTower", active);
       },

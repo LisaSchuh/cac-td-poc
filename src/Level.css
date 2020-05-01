@@ -1,3 +1,6 @@
 #container {
-  background: linear-gradient(to bottom, #fc8028 25%, #fc28a8);
+  background: #133072;
+  /* background: linear-gradient(to bottom, #050831 10%, c); */
+  /* background: linear-gradient(to bottom, #050831 20%, white); */
+  background: linear-gradient(to bottom, #050831 0%, #e1035a);
 }

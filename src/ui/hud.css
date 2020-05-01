@@ -10,7 +10,7 @@
   /* color: #f92aad;
   text-shadow: 0 0 2px #100c0f, 2px 2px 15px #dc078ee0, 0 0 25px white; */
   font-family: "neon80s";
-  font-size: 3em;
+  font-size: 2em;
 }
 
 .action-bar {
@@ -20,24 +20,24 @@
   right: 0;
   display: flex;
   justify-content: space-between;
-  margin: 0 20px;
+  box-shadow: 0 0 2px #050831, 0 0 20px #050831;
+  font-family: "neon80s";
 }
 
 .action-bar__element {
   flex: 1 1 0;
-  background-color: #72f1b8;
-  box-shadow: 0 0 2px white, 0 0 10px #72f1b8;
+  background-color: #133072;
+
   border: none;
-  padding: 0 20px;
-  border-radius: 5px;
+  padding: 10px 20px;
   font-weight: bold;
   max-width: 100vw - 40px;
-  font-size: 3em;
+  font-size: 2em;
   color: white;
-  text-shadow: 0 0 2px #adabab, 0 0 10px white;
+  /* text-shadow: 0 0 2px black, 0 0 2px white; */
+  font-family: "neon80s";
 }
 
 .action-bar__element--active {
-  background-color: #63d2a0;
-  box-shadow: 0 0 2px white, 0 0 10px #63d2a0a6;
+  background-color: #415ba7;
 }

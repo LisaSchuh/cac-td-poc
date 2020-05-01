@@ -1,12 +1,12 @@
 import { IPosition, GameObject, GameState } from "../general/types";
 import Konva from "konva";
 
-const width = 15;
-const height = 20;
+const width = 2;
+const height = 2;
 
-export const EBasicEnemy = (): GameObject => {
+export const EProjectile = (): GameObject => {
   return {
-    visuals: VBasicEnemy,
+    visuals: VProjectile,
     physics: {
       position: { x: 0, y: 0 },
       velocity: 0,
@@ -14,24 +14,24 @@ export const EBasicEnemy = (): GameObject => {
       dimension: { width, height },
     },
     logic: (state: GameState) => state,
-    type: "ENEMY",
+    type: "PROJECTILE",
   };
 };
-function VBasicEnemy(props: IPosition) {
+function VProjectile(props: IPosition) {
   return new Konva.Shape({
     sceneFunc: function (context, shape) {
       context.beginPath();
       context.moveTo(props.x, props.y);
-      context.lineTo(props.x + width, props.y);
-      context.lineTo(props.x + width / 2, props.y - height);
+      context.lineTo(props.x + 10, props.y);
       context.closePath();
 
       // (!) Konva specific method, it is very important
       context.fillStrokeShape(shape);
     },
-    fill: "#5c2c6d ",
-    strokeWidth: 1,
-    stroke: "#f946AB",
-    cornerRadius: 2,
+    // radius: 2,
+    fill: "white",
+    // strokeWidth: 1,
+    stroke: "white",
+    // cornerRadius: 2,
   });
 }
