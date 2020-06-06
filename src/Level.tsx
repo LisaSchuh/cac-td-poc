@@ -25,8 +25,10 @@ let prevGameState: GameState = {
 
 let init = false;
 export const levelSetup = () => {
-  prevGameState.gameObjects["innerSanctuary"] = EInnerSanctuary();
-  prevGameState.gameObjects["player"] = EPlayer();
+  prevGameState.gameObjects["innerSanctuary"] = EInnerSanctuary(
+    "innerSanctuary"
+  );
+  prevGameState.gameObjects["player"] = EPlayer("player");
   init = true;
 };
 

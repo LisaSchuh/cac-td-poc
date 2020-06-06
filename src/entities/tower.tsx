@@ -1,10 +1,11 @@
 import { IPosition, GameObject, GameState } from "../general/types";
+import { v4 as uuidv4 } from "uuid";
 import Konva from "konva";
 
 const width = 40;
 const height = 40;
 
-export const ETower = (): GameObject => {
+export const ETower = (id?: string): GameObject => {
   return {
     visuals: VTower,
     physics: {
@@ -15,6 +16,7 @@ export const ETower = (): GameObject => {
     },
     logic: (state: GameState) => state,
     type: "TOWER",
+    id: id ? id : uuidv4(),
   };
 };
 function VTower(props: IPosition) {

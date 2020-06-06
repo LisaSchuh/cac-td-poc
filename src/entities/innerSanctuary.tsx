@@ -1,20 +1,20 @@
 import { IPosition, GameObject, GameState } from "../general/types";
+import { v4 as uuidv4 } from "uuid";
 import Konva from "konva";
 
 const width = 125;
-const height = 125;
 
-export const EInnerSanctuary = (): GameObject => {
+export const EInnerSanctuary = (id?: string): GameObject => {
   return {
     visuals: VInnerSanctuary,
     physics: {
       position: {
-        x: window.innerWidth / 2 - 63,
-        y: window.innerHeight / 2 - 63,
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
       },
       velocity: 0,
       direction: { x: 0, y: 0 },
-      dimension: { width, height },
+      radius: width,
     },
     logic: function (state: GameState) {
       if (
@@ -27,22 +27,22 @@ export const EInnerSanctuary = (): GameObject => {
       return state;
     },
     type: "INNERSANCTUARY",
+    id: id ? id : uuidv4(),
   };
 };
 
 function VInnerSanctuary(position: IPosition) {
-  return new Konva.Rect({
+  return new Konva.Circle({
     x: position.x,
     y: position.y,
-    width,
-    height,
+    radius: width,
     cornerRadius: 80,
     stroke: "#f946AB",
     shadowBlur: 20,
     shadowColor: "#f946AB",
-    fillLinearGradientColorStops: [0, "#ffd319", 1, "#ff2975"],
-    fillLinearGradientStartPoint: { x: 0, y: 50 },
-    fillLinearGradientEndPoint: { x: 0, y: 180 },
+    fillLinearGradientColorStops: [0, "#ffd319", 1, "#ff784a"],
+    fillLinearGradientStartPoint: { x: 0, y: -20 },
+    fillLinearGradientEndPoint: { x: 0, y: 100 },
     strokeWidth: 1,
   });
 }

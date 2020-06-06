@@ -21,7 +21,7 @@ export const doPlaceTowerSystem = (gameState: GameState): GameState => {
     delete gameState.gameObjects[PLACEHOLDERTOWER];
   }
   if (!gameState.gameObjects[PLACEHOLDERTOWER] && active) {
-    gameState.gameObjects[PLACEHOLDERTOWER] = ETower();
+    gameState.gameObjects[PLACEHOLDERTOWER] = ETower(PLACEHOLDERTOWER);
     gameState.gameObjects[PLACEHOLDERTOWER].physics.position = mousePosition;
     sendLogEvent(
       "Move your mouse to place the defender, apparently not everyone is smart enough to get this... "
@@ -37,7 +37,7 @@ export const doPlaceTowerSystem = (gameState: GameState): GameState => {
         .length === 0
     ) {
       const guid = uuidv4();
-      gameState.gameObjects[guid] = ETower();
+      gameState.gameObjects[guid] = ETower(guid);
       gameState.gameObjects[guid].physics.position = mousePosition;
 
       gameState.crystals -= 20;

@@ -26,7 +26,7 @@
 
 .action-bar__element {
   flex: 1 1 0;
-  background-color: black;
+  background-color: #101010;
 
   border: none;
   padding: 10px 20px;
@@ -39,5 +39,5 @@
 }
 
 .action-bar__element--active {
-  background-color: #415ba7;
+  background-color: #222;
 }

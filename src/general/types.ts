@@ -18,7 +18,8 @@ export interface PhysicObject {
   position: IPosition;
   velocity: 0;
   direction: IPosition;
-  dimension: IDimension;
+  dimension?: IDimension;
+  radius?: number;
 }
 
 export interface IInput {
@@ -42,6 +43,7 @@ export interface GameObject {
   physics: PhysicObject;
   logic: (state: GameState, prevState?: GameState) => GameState;
   type: string;
+  id: string;
 }
 
 export type GameObjects = IHash<GameObject>;

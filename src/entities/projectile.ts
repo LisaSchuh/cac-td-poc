@@ -1,10 +1,11 @@
 import { IPosition, GameObject, GameState } from "../general/types";
+import { v4 as uuidv4 } from "uuid";
 import Konva from "konva";
 
 const width = 2;
 const height = 2;
 
-export const EProjectile = (): GameObject => {
+export const EProjectile = (id?: string): GameObject => {
   return {
     visuals: VProjectile,
     physics: {
@@ -15,6 +16,7 @@ export const EProjectile = (): GameObject => {
     },
     logic: (state: GameState) => state,
     type: "PROJECTILE",
+    id: id ? id : uuidv4(),
   };
 };
 function VProjectile(props: IPosition) {

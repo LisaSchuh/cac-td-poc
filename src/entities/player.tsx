@@ -1,7 +1,8 @@
 import { IPosition, GameObject, GameState } from "../general/types";
+import { v4 as uuidv4 } from "uuid";
 import Konva from "konva";
 
-export const EPlayer = (): GameObject => {
+export const EPlayer = (id?: string): GameObject => {
   return {
     visuals: (position: IPosition) => {
       return new Konva.Shape({
@@ -19,5 +20,6 @@ export const EPlayer = (): GameObject => {
       return state;
     },
     type: "PLAYER",
+    id: id ? id : uuidv4(),
   };
 };
