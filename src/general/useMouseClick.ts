@@ -11,11 +11,16 @@ document.addEventListener(
       currentTimeStamp = Date.now();
     };
 
+    const setFromTouchEvent = () => {
+      sendLogEvent("event touch triggered");
+      currentTimeStamp = Date.now();
+    };
+
     window.addEventListener("click", setFromEvent);
-    // window.addEventListener("touchstart", setFromEvent);
+    window.addEventListener("touchstart", setFromTouchEvent);
     return () => {
       window.removeEventListener("click", setFromEvent);
-      // window.removeEventListener("touchstart", setFromEvent);
+      window.removeEventListener("touchstart", setFromTouchEvent);
     };
   },
   false
