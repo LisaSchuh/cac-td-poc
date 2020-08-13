@@ -12,10 +12,10 @@ document.addEventListener(
     };
 
     window.addEventListener("click", setFromEvent);
-    window.addEventListener("touchstart", setFromEvent);
+    // window.addEventListener("touchstart", setFromEvent);
     return () => {
       window.removeEventListener("click", setFromEvent);
-      window.removeEventListener("touchstart", setFromEvent);
+      // window.removeEventListener("touchstart", setFromEvent);
     };
   },
   false
