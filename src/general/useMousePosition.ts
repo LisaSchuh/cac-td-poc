@@ -15,6 +15,8 @@ document.addEventListener(
     window.addEventListener("mousemove", setFromEvent);
     return () => {
       window.removeEventListener("mousemove", setFromEvent);
+      window.removeEventListener("touchstart", setFromTouchEvent);
+      window.removeEventListener("touchmove", setFromTouchEvent);
     };
   },
   false

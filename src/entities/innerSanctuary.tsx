@@ -1,6 +1,5 @@
 import { IPosition, GameObject, GameState } from "../general/types";
 import Konva from "konva";
-import { sendLogEvent } from "../general/events";
 
 const width = Math.min(125, window.innerWidth * 0.25);
 

@@ -1,5 +1,3 @@
-import { sendLogEvent } from "./events";
-
 let lastTimestamp = Date.now();
 let currentTimeStamp = Date.now();
 
