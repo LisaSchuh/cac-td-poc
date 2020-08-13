@@ -9,15 +9,12 @@ document.addEventListener(
       position = { x: e.clientX, y: e.clientY };
     };
     const setFromTouchEvent = (e: TouchEvent) => {
-      sendLogEvent(`touchmove ${e.touches[0].clientX}`);
       position = { x: e.touches[0].clientX, y: e.touches[0].clientX };
     };
     window.addEventListener("touchmove", setFromTouchEvent);
-    // window.addEventListener("touchstart", setFromTouchEvent);
     window.addEventListener("mousemove", setFromEvent);
     return () => {
       window.removeEventListener("mousemove", setFromEvent);
-      // window.removeEventListener("touchstart", setFromTouchEvent);
       window.removeEventListener("touchmove", setFromTouchEvent);
     };
   },
