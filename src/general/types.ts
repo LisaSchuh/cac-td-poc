@@ -47,3 +47,19 @@ export interface GameObject {
 }
 
 export type GameObjects = IHash<GameObject>;
+
+export const DummyPhysics: PhysicObject = {
+  position: {
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+  },
+  velocity: 0,
+  direction: { x: 0, y: 0 },
+  radius: 0,
+};
+
+export const DummyVisuals = (position: IPosition) => {
+  return new Konva.Shape({
+    sceneFunc(context, shape) {},
+  });
+};

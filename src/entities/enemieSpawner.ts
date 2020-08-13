@@ -1,15 +1,27 @@
-import { GameState, IPosition } from "../general/types";
-import { EBasicEnemy } from "../entities/basicEnemy";
+import {
+  GameState,
+  IPosition,
+  GameObject,
+  DummyPhysics,
+  DummyVisuals,
+} from "../general/types";
+import { EBasicEnemy } from "./basicEnemy";
 import { v4 as uuidv4 } from "uuid";
-import { EProjectile } from "../entities/projectile";
 
 const timeBetweenEnemies = 1000;
 let lastEnemySpawnTimeSpan = 0;
 
-export const doSpawnEnemies = (
-  gameState: GameState,
-  prevGameState: GameState
-): GameState => {
+export const EEnemySpawner = (id?: string): GameObject => {
+  return {
+    visuals: DummyVisuals,
+    physics: DummyPhysics,
+    logic: doSpawnEnemies,
+    type: "ENEMYSPAWNER",
+    id: id ? id : uuidv4(),
+  };
+};
+
+const doSpawnEnemies = (gameState: GameState): GameState => {
   //Spawn new Enemies
   if (gameState.tFrame - lastEnemySpawnTimeSpan > timeBetweenEnemies) {
     const guid = uuidv4();

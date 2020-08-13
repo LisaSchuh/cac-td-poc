@@ -1,14 +1,15 @@
-import { IPosition, GameObject, GameState } from "../general/types";
+import {
+  IPosition,
+  GameObject,
+  GameState,
+  DummyVisuals,
+} from "../general/types";
 import { v4 as uuidv4 } from "uuid";
 import Konva from "konva";
 
 export const EPlayer = (id?: string): GameObject => {
   return {
-    visuals: (position: IPosition) => {
-      return new Konva.Shape({
-        sceneFunc(context, shape) {},
-      });
-    },
+    visuals: DummyVisuals,
     physics: {
       position: { x: 0, y: 0 },
       velocity: 0,

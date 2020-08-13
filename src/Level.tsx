@@ -9,7 +9,7 @@ import { doPhysics } from "./systems/physics";
 import { doDrawing } from "./systems/drawing";
 import { doStatusCommunication } from "./systems/statusCommunication";
 import { doInput } from "./systems/input";
-import { doSpawnEnemies } from "./systems/enemieSpawner";
+import { EEnemySpawner } from "./entities/enemieSpawner";
 
 let prevGameState: GameState = {
   collisions: {},
@@ -29,6 +29,7 @@ export const levelSetup = () => {
     "innerSanctuary"
   );
   prevGameState.gameObjects["player"] = EPlayer("player");
+  prevGameState.gameObjects["enemySpawner"] = EEnemySpawner("enemySpawner");
   init = true;
 };
 
@@ -54,7 +55,6 @@ export function levelStart(tFrame: number) {
     gameState.input = doInput();
     gameState.collisions = doPhysics(gameState.gameObjects);
     gameState = doLogic(gameState, prevGameState);
-    gameState = doSpawnEnemies(gameState, prevGameState);
     gameState = doPlaceTowerSystem(gameState);
     doDrawing(gameState.gameObjects);
     doStatusCommunication(gameState, prevGameState);
