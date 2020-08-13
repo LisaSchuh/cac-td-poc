@@ -7,20 +7,14 @@ document.addEventListener(
   "DOMContentLoaded",
   () => {
     const setFromEvent = () => {
-      sendLogEvent("event triggered");
-      currentTimeStamp = Date.now();
-    };
-
-    const setFromTouchEvent = () => {
-      sendLogEvent("event touch triggered");
       currentTimeStamp = Date.now();
     };
 
     window.addEventListener("click", setFromEvent);
-    window.addEventListener("touchend", setFromTouchEvent);
+    window.addEventListener("touchend", setFromEvent);
     return () => {
       window.removeEventListener("click", setFromEvent);
-      window.removeEventListener("touchend", setFromTouchEvent);
+      window.removeEventListener("touchend", setFromEvent);
     };
   },
   false
@@ -29,5 +23,8 @@ document.addEventListener(
 export const getMouseClick = () => {
   const clicked = lastTimestamp < currentTimeStamp ? true : false;
   lastTimestamp = currentTimeStamp;
+  if (clicked) {
+    sendLogEvent("click happened");
+  }
   return clicked;
 };
