@@ -1,10 +1,9 @@
 import { IPosition, GameObject, GameState } from "../general/types";
-import { v4 as uuidv4 } from "uuid";
 import Konva from "konva";
 
 const width = 125;
 
-export const EInnerSanctuary = (id?: string): GameObject => {
+export const EInnerSanctuary = (): GameObject => {
   return {
     visuals: VInnerSanctuary,
     physics: {
@@ -16,18 +15,18 @@ export const EInnerSanctuary = (id?: string): GameObject => {
       direction: { x: 0, y: 0 },
       radius: width,
     },
-    logic: function (state: GameState) {
+    logic: function (id: string, state: GameState) {
       if (
         state.input.mouseClicked &&
-        state.collisions["player"].filter((c) => c === "innerSanctuary")
-          .length > 0
+        state.collisions["player"].filter((c) => c === id).length > 0
       ) {
         state.crystals += 10;
+        let audio = new Audio("LSC_Kick_03.wav");
+        audio.play();
       }
       return state;
     },
     type: "INNERSANCTUARY",
-    id: id ? id : uuidv4(),
   };
 };
 

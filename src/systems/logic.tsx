@@ -5,7 +5,7 @@ export const doLogic = (
   prevGameState: GameState
 ): GameState => {
   Object.keys(gameState.gameObjects).forEach((k) => {
-    gameState = gameState.gameObjects[k].logic(gameState, prevGameState);
+    gameState = gameState.gameObjects[k].logic(k, gameState, prevGameState);
   });
 
   return gameState;

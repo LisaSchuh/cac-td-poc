@@ -1,25 +1,103 @@
-import { IPosition, GameObject, GameState } from "../general/types";
+import {
+  IPosition,
+  GameObject,
+  GameState,
+  DummyLogic,
+  DummyVisuals,
+  IHash,
+} from "../general/types";
 import { v4 as uuidv4 } from "uuid";
 import Konva from "konva";
+import { getObject, deleteObject } from "../general/engine";
+import { sendLogEvent } from "../general/events";
 
 const width = 40;
 const height = 40;
+const range = 100;
+const upkeepCost = 5;
+let lastUpkeeptPaid = 0;
+const timeBetweenUpkeepPayment = 1000;
 
-export const ETower = (id?: string): GameObject => {
+export const ETower = (): IHash<GameObject> => {
   return {
-    visuals: VTower,
+    main: {
+      visuals: DummyVisuals,
+      physics: {
+        position: { x: 0, y: 0 },
+        velocity: 0,
+        direction: { x: 0, y: 0 },
+        radius: 0,
+      },
+      logic: doTowerLogic,
+      type: "TOWER",
+    },
+    Range: ERangeTower(),
+    Visual: EVisibleTower(),
+  };
+};
+
+const doTowerLogic = (id: string, gameState: GameState): GameState => {
+  const main = getObject(gameState.gameObjects, id);
+  const range = getObject(gameState.gameObjects, `${id}_Range`);
+  const visual = getObject(gameState.gameObjects, `${id}_Visual`);
+
+  //Update Position with Main Obj
+  if (
+    main.physics.position.x != visual.physics.position.x &&
+    main.physics.position.x != visual.physics.position.y
+  ) {
+    visual.physics.position = main.physics.position;
+    range.physics.position = main.physics.position;
+  }
+
+  //Check for enemy in range
+  if (gameState.collisions[`${id}_Range`]) {
+    gameState.collisions[`${id}_Range`].forEach((f) => {
+      if (getObject(gameState.gameObjects, f).type === "ENEMY") {
+        deleteObject(gameState, f);
+      }
+    });
+  }
+
+  if (gameState.tFrame - lastUpkeeptPaid > timeBetweenUpkeepPayment) {
+    if (gameState.crystals >= upkeepCost) {
+      gameState.crystals -= upkeepCost;
+    } else {
+      deleteObject(gameState, id);
+      sendLogEvent("oh no... where are the beats to sustain the towers??");
+    }
+    lastUpkeeptPaid = gameState.tFrame;
+  }
+  return gameState;
+};
+
+const ERangeTower = (): GameObject => {
+  return {
+    visuals: DummyVisuals,
+    physics: {
+      position: { x: 0, y: 0 },
+      velocity: 0,
+      direction: { x: 0, y: 0 },
+      radius: range,
+    },
+    logic: DummyLogic,
+    type: "TOWER",
+  };
+};
+const EVisibleTower = (): GameObject => {
+  return {
+    visuals: VVisibleTower,
     physics: {
       position: { x: 0, y: 0 },
       velocity: 0,
       direction: { x: 0, y: 0 },
       dimension: { width, height },
     },
-    logic: (state: GameState) => state,
+    logic: DummyLogic,
     type: "TOWER",
-    id: id ? id : uuidv4(),
   };
 };
-function VTower(props: IPosition) {
+function VVisibleTower(props: IPosition) {
   return new Konva.Rect({
     x: props.x,
     y: props.y,

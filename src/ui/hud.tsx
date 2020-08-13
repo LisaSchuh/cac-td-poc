@@ -40,8 +40,8 @@ function Hud() {
   return (
     <>
       <div className="status-bar">
-        <div className="status-bar__element">{`Health ${health}`}</div>
-        <div className="status-bar__element">{`Crystals ${crystals}`}</div>
+        <div className="status-bar__element">{`80's vibe ${health}`}</div>
+        <div className="status-bar__element">{`beats ${crystals}`}</div>
       </div>
 
       <div className="action-bar">

@@ -1,8 +1,9 @@
 import { GameState } from "../general/types";
 
-import { v4 as uuidv4 } from "uuid";
 import { ETower } from "../entities/tower";
 import { registerActionToggledEvent, sendLogEvent } from "../general/events";
+import { addMultiObject, getObject, deleteObject } from "../general/engine";
+import { EPlaceTower } from "../entities/placeTower";
 
 const PLACEHOLDERTOWER = "towerPlacement";
 let active = false;
@@ -17,18 +18,28 @@ export const doPlaceTowerSystem = (gameState: GameState): GameState => {
   const mouseClicked = gameState.input.mouseClicked;
   const mousePosition = gameState.input.mousePosition;
 
-  if (gameState.gameObjects[PLACEHOLDERTOWER] && !active) {
-    delete gameState.gameObjects[PLACEHOLDERTOWER];
+  const playerInsideSanctuary =
+    gameState.collisions["innerSanctuary"].filter((f) => f === "player")
+      .length > 0;
+  if (
+    gameState.gameObjects[PLACEHOLDERTOWER] &&
+    (!active || playerInsideSanctuary)
+  ) {
+    deleteObject(gameState, PLACEHOLDERTOWER);
   }
-  if (!gameState.gameObjects[PLACEHOLDERTOWER] && active) {
-    gameState.gameObjects[PLACEHOLDERTOWER] = ETower(PLACEHOLDERTOWER);
+  if (
+    !gameState.gameObjects[PLACEHOLDERTOWER] &&
+    active &&
+    !playerInsideSanctuary
+  ) {
+    gameState.gameObjects[PLACEHOLDERTOWER] = EPlaceTower();
     gameState.gameObjects[PLACEHOLDERTOWER].physics.position = mousePosition;
     sendLogEvent(
       "Move your mouse to place the defender, apparently not everyone is smart enough to get this... "
     );
   }
 
-  if (active) {
+  if (active && !playerInsideSanctuary) {
     gameState.gameObjects[PLACEHOLDERTOWER].physics.position = mousePosition;
     if (
       mouseClicked &&
@@ -36,14 +47,16 @@ export const doPlaceTowerSystem = (gameState: GameState): GameState => {
       gameState.collisions["player"].filter((c) => c === "innerSanctuary")
         .length === 0
     ) {
-      const guid = uuidv4();
-      gameState.gameObjects[guid] = ETower(guid);
-      gameState.gameObjects[guid].physics.position = mousePosition;
+      const newTower = addMultiObject(gameState.gameObjects, ETower());
+      getObject(
+        gameState.gameObjects,
+        newTower
+      ).physics.position = mousePosition;
 
       gameState.crystals -= 20;
     }
     if (mouseClicked && gameState.crystals < 20) {
-      sendLogEvent("Not enough money, get a job!");
+      sendLogEvent("You need more synthwave beats do to that!");
     }
   }
   return gameState;

@@ -10,6 +10,7 @@ import { doDrawing } from "./systems/drawing";
 import { doStatusCommunication } from "./systems/statusCommunication";
 import { doInput } from "./systems/input";
 import { EEnemySpawner } from "./entities/enemieSpawner";
+import { addObject } from "./general/engine";
 
 let prevGameState: GameState = {
   collisions: {},
@@ -21,15 +22,14 @@ let prevGameState: GameState = {
   crystals: 0,
   health: 1000,
   gameObjects: {},
+  toDelete: [],
 };
 
 let init = false;
 export const levelSetup = () => {
-  prevGameState.gameObjects["innerSanctuary"] = EInnerSanctuary(
-    "innerSanctuary"
-  );
-  prevGameState.gameObjects["player"] = EPlayer("player");
-  prevGameState.gameObjects["enemySpawner"] = EEnemySpawner("enemySpawner");
+  addObject(prevGameState.gameObjects, EInnerSanctuary(), "innerSanctuary");
+  addObject(prevGameState.gameObjects, EPlayer(), "player");
+  addObject(prevGameState.gameObjects, EEnemySpawner());
   init = true;
 };
 
@@ -51,6 +51,7 @@ export function levelStart(tFrame: number) {
       crystals: prevGameState.crystals,
       health: prevGameState.health,
       gameObjects: prevGameState.gameObjects,
+      toDelete: [],
     };
     gameState.input = doInput();
     gameState.collisions = doPhysics(gameState.gameObjects);
@@ -58,6 +59,9 @@ export function levelStart(tFrame: number) {
     gameState = doPlaceTowerSystem(gameState);
     doDrawing(gameState.gameObjects);
     doStatusCommunication(gameState, prevGameState);
+
+    //cleanup unused objs
+    gameState.toDelete.forEach((d) => delete gameState.gameObjects[d]);
 
     prevGameState = gameState;
   }

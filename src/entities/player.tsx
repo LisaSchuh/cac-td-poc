@@ -1,13 +1,6 @@
-import {
-  IPosition,
-  GameObject,
-  GameState,
-  DummyVisuals,
-} from "../general/types";
-import { v4 as uuidv4 } from "uuid";
-import Konva from "konva";
+import { GameObject, GameState, DummyVisuals } from "../general/types";
 
-export const EPlayer = (id?: string): GameObject => {
+export const EPlayer = (): GameObject => {
   return {
     visuals: DummyVisuals,
     physics: {
@@ -16,11 +9,10 @@ export const EPlayer = (id?: string): GameObject => {
       direction: { x: 0, y: 0 },
       dimension: { width: 1, height: 1 },
     },
-    logic: function (state: GameState) {
+    logic: function (id: string, state: GameState) {
       this.physics.position = state.input.mousePosition;
       return state;
     },
     type: "PLAYER",
-    id: id ? id : uuidv4(),
   };
 };

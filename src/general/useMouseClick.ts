@@ -9,9 +9,10 @@ document.addEventListener(
     };
 
     window.addEventListener("click", setFromEvent);
-
+    window.addEventListener("touch", setFromEvent);
     return () => {
       window.removeEventListener("click", setFromEvent);
+      window.addEventListener("touch", setFromEvent);
     };
   },
   false

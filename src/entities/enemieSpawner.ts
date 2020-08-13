@@ -7,27 +7,28 @@ import {
 } from "../general/types";
 import { EBasicEnemy } from "./basicEnemy";
 import { v4 as uuidv4 } from "uuid";
+import { addObject, getObject } from "../general/engine";
 
 const timeBetweenEnemies = 1000;
 let lastEnemySpawnTimeSpan = 0;
 
-export const EEnemySpawner = (id?: string): GameObject => {
+export const EEnemySpawner = (): GameObject => {
   return {
     visuals: DummyVisuals,
     physics: DummyPhysics,
     logic: doSpawnEnemies,
     type: "ENEMYSPAWNER",
-    id: id ? id : uuidv4(),
   };
 };
 
-const doSpawnEnemies = (gameState: GameState): GameState => {
+const doSpawnEnemies = (id: string, gameState: GameState): GameState => {
   //Spawn new Enemies
   if (gameState.tFrame - lastEnemySpawnTimeSpan > timeBetweenEnemies) {
-    const guid = uuidv4();
-
-    gameState.gameObjects[guid] = EBasicEnemy(guid);
-    gameState.gameObjects[guid].physics.position = getRandomPosition();
+    const newEnemy = addObject(gameState.gameObjects, EBasicEnemy());
+    getObject(
+      gameState.gameObjects,
+      newEnemy
+    ).physics.position = getRandomPosition();
     lastEnemySpawnTimeSpan = gameState.tFrame;
   }
 

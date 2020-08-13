@@ -36,14 +36,14 @@ export interface GameState {
   tFrame: number;
   crystals: number;
   health: number;
+  toDelete: string[];
 }
 
 export interface GameObject {
   visuals: (position: IPosition) => Konva.Shape;
   physics: PhysicObject;
-  logic: (state: GameState, prevState?: GameState) => GameState;
+  logic: (id: string, state: GameState, prevState?: GameState) => GameState;
   type: string;
-  id: string;
 }
 
 export type GameObjects = IHash<GameObject>;
@@ -63,3 +63,7 @@ export const DummyVisuals = (position: IPosition) => {
     sceneFunc(context, shape) {},
   });
 };
+
+export const DummyLogic = (id: string, state: GameState) => state;
+
+export const MAINOBJ = "main";

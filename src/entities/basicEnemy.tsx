@@ -1,5 +1,4 @@
 import { IPosition, GameObject, GameState } from "../general/types";
-import { v4 as uuidv4 } from "uuid";
 import Konva from "konva";
 import {
   normalizeVector,
@@ -7,11 +6,12 @@ import {
   getVectorBetweenPoints,
   addVectors,
 } from "../general/vectorMath";
+import { deleteObject } from "../general/engine";
 
 const width = 15;
 const height = 20;
 
-export const EBasicEnemy = (id?: string): GameObject => {
+export const EBasicEnemy = (): GameObject => {
   return {
     visuals: VBasicEnemy,
     physics: {
@@ -22,12 +22,12 @@ export const EBasicEnemy = (id?: string): GameObject => {
     },
     logic: LBasicEnemy,
     type: "ENEMY",
-    id: id ? id : uuidv4(),
   };
 };
 
 function LBasicEnemy(
   this: GameObject,
+  id: string,
   state: GameState,
   prevState?: GameState
 ): GameState {
@@ -35,10 +35,10 @@ function LBasicEnemy(
   const targetVector = state.gameObjects["innerSanctuary"].physics.position;
   if (
     state.collisions["innerSanctuary"] &&
-    state.collisions["innerSanctuary"].filter((f) => f === self.id).length > 0
+    state.collisions["innerSanctuary"].filter((f) => f === id).length > 0
   ) {
     state.health -= 5;
-    delete state.gameObjects[self.id];
+    deleteObject(state, id);
     return state;
   }
   const directionalVector = normalizeVector(
