@@ -1,5 +1,4 @@
 import { IPosition } from "./types";
-import { sendLogEvent } from "./events";
 
 let position = { x: 0, y: 0 };
 document.addEventListener(
