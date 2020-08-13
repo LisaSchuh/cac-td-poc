@@ -34,9 +34,9 @@ export const doPlaceTowerSystem = (gameState: GameState): GameState => {
   ) {
     gameState.gameObjects[PLACEHOLDERTOWER] = EPlaceTower();
     gameState.gameObjects[PLACEHOLDERTOWER].physics.position = mousePosition;
-    sendLogEvent(
-      "Move your mouse to place the defender, apparently not everyone is smart enough to get this... "
-    );
+    // sendLogEvent(
+    //   "Move your mouse to place the defender, apparently not everyone is smart enough to get this... "
+    // );
   }
 
   if (active && !playerInsideSanctuary) {
@@ -56,7 +56,7 @@ export const doPlaceTowerSystem = (gameState: GameState): GameState => {
       gameState.crystals -= 20;
     }
     if (mouseClicked && gameState.crystals < 20) {
-      sendLogEvent("You need more synthwave beats do to that!");
+      // sendLogEvent("You need more synthwave beats do to that!");
     }
   }
   return gameState;

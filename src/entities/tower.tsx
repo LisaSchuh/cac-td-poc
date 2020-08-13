@@ -63,7 +63,7 @@ const doTowerLogic = (id: string, gameState: GameState): GameState => {
       gameState.crystals -= upkeepCost;
     } else {
       deleteObject(gameState, id);
-      sendLogEvent("oh no... where are the beats to sustain the towers??");
+      // sendLogEvent("oh no... where are the beats to sustain the towers??");
     }
     lastUpkeeptPaid = gameState.tFrame;
   }
