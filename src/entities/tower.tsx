@@ -8,7 +8,6 @@ import {
 } from "../general/types";
 import Konva from "konva";
 import { getObject, deleteObject } from "../general/engine";
-import { sendLogEvent } from "../general/events";
 
 const width = 40;
 const height = 40;

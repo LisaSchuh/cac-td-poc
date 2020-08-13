@@ -1,7 +1,7 @@
 import { GameState } from "../general/types";
 
 import { ETower } from "../entities/tower";
-import { registerActionToggledEvent, sendLogEvent } from "../general/events";
+import { registerActionToggledEvent } from "../general/events";
 import { addMultiObject, getObject, deleteObject } from "../general/engine";
 import { EPlaceTower } from "../entities/placeTower";
 
