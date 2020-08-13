@@ -7,6 +7,11 @@ document.addEventListener(
     const setFromEvent = (e: MouseEvent) => {
       position = { x: e.clientX, y: e.clientY };
     };
+    const setFromTouchEvent = (e: TouchEvent) => {
+      position = { x: e.touches[0].clientX, y: e.touches[0].clientX };
+    };
+    window.addEventListener("touchmove", setFromTouchEvent);
+    window.addEventListener("touchstart", setFromTouchEvent);
     window.addEventListener("mousemove", setFromEvent);
     return () => {
       window.removeEventListener("mousemove", setFromEvent);

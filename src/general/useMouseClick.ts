@@ -23,8 +23,5 @@ document.addEventListener(
 export const getMouseClick = () => {
   const clicked = lastTimestamp < currentTimeStamp ? true : false;
   lastTimestamp = currentTimeStamp;
-  if (clicked) {
-    sendLogEvent("click happened");
-  }
   return clicked;
 };
