@@ -29,7 +29,7 @@ let init = false;
 export const levelSetup = () => {
   addObject(prevGameState.gameObjects, EInnerSanctuary(), "innerSanctuary");
   addObject(prevGameState.gameObjects, EPlayer(), "player");
-  // addObject(prevGameState.gameObjects, EEnemySpawner());
+  addObject(prevGameState.gameObjects, EEnemySpawner());
   init = true;
 };
 
