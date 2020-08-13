@@ -1,7 +1,7 @@
 import { IPosition, GameObject, GameState } from "../general/types";
 import Konva from "konva";
 
-const width = 125;
+const width = Math.min(125, window.innerWidth * 0.25);
 
 export const EInnerSanctuary = (): GameObject => {
   return {

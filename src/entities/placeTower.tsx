@@ -1,5 +1,4 @@
-import { IPosition, GameObject, GameState, DummyLogic } from "../general/types";
-import { v4 as uuidv4 } from "uuid";
+import { IPosition, GameObject, DummyLogic } from "../general/types";
 import Konva from "konva";
 
 const width = 40;

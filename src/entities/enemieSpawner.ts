@@ -6,7 +6,6 @@ import {
   DummyVisuals,
 } from "../general/types";
 import { EBasicEnemy } from "./basicEnemy";
-import { v4 as uuidv4 } from "uuid";
 import { addObject, getObject } from "../general/engine";
 
 const timeBetweenEnemies = 1000;

@@ -6,7 +6,6 @@ import {
   DummyVisuals,
   IHash,
 } from "../general/types";
-import { v4 as uuidv4 } from "uuid";
 import Konva from "konva";
 import { getObject, deleteObject } from "../general/engine";
 import { sendLogEvent } from "../general/events";
@@ -43,8 +42,8 @@ const doTowerLogic = (id: string, gameState: GameState): GameState => {
 
   //Update Position with Main Obj
   if (
-    main.physics.position.x != visual.physics.position.x &&
-    main.physics.position.x != visual.physics.position.y
+    main.physics.position.x !== visual.physics.position.x &&
+    main.physics.position.x !== visual.physics.position.y
   ) {
     visual.physics.position = main.physics.position;
     range.physics.position = main.physics.position;
