@@ -17,10 +17,10 @@ document.addEventListener(
     };
 
     window.addEventListener("click", setFromEvent);
-    window.addEventListener("touchstart", setFromTouchEvent);
+    window.addEventListener("touchend", setFromTouchEvent);
     return () => {
       window.removeEventListener("click", setFromEvent);
-      window.removeEventListener("touchstart", setFromTouchEvent);
+      window.removeEventListener("touchend", setFromTouchEvent);
     };
   },
   false
