@@ -8,13 +8,13 @@ document.addEventListener(
       position = { x: e.clientX, y: e.clientY };
     };
     const setFromTouchEvent = (e: TouchEvent) => {
-      position = { x: e.touches[0].clientX, y: e.touches[0].clientX };
+      position = { x: e.touches[0].clientX, y: e.touches[0].clientY };
     };
-    window.addEventListener("touchmove", setFromTouchEvent);
+    window.addEventListener("touchstart", setFromTouchEvent);
     window.addEventListener("mousemove", setFromEvent);
     return () => {
       window.removeEventListener("mousemove", setFromEvent);
-      window.removeEventListener("touchmove", setFromTouchEvent);
+      window.removeEventListener("touchstart", setFromTouchEvent);
     };
   },
   false

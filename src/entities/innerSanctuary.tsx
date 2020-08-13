@@ -17,9 +17,8 @@ export const EInnerSanctuary = (): GameObject => {
     },
     logic: function (id: string, state: GameState) {
       if (
-        state.input.mouseClicked
-        // &&
-        // state.collisions["player"].filter((c) => c === id).length > 0
+        state.input.mouseClicked &&
+        state.collisions["player"].filter((c) => c === id).length > 0
       ) {
         state.crystals += 10;
         let audio = new Audio("LSC_Kick_03.wav");
