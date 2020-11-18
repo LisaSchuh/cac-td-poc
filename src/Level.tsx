@@ -24,7 +24,7 @@ function getInitGameState(): GameState {
     },
     tFrame: performance.now(),
     crystals: 0,
-    health: 10,
+    health: 1000,
     gameObjects: {},
     toDelete: [],
   };
@@ -75,7 +75,11 @@ export function levelStart(tFrame: number) {
   doStatusCommunication(gameState, prevGameState);
 
   //cleanup unused objs
-  gameState.toDelete.forEach((d) => delete gameState.gameObjects[d]);
+  gameState.toDelete.forEach((d) => {
+    if (gameState.gameObjects[d]) {
+      delete gameState.gameObjects[d];
+    }
+  });
 
   prevGameState = gameState;
 }

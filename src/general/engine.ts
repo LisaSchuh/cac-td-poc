@@ -31,4 +31,9 @@ export const getObject = (gos: GameObjects, id: string): GameObject => {
 
 export const deleteObject = (state: GameState, id: string) => {
   state.toDelete.push(id);
+  Object.keys(state.gameObjects).forEach((obj) => {
+    if (obj.startsWith(id)) {
+      state.toDelete.push(obj);
+    }
+  });
 };
