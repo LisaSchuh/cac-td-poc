@@ -14,11 +14,10 @@ document.addEventListener(
   "DOMContentLoaded",
   () => {
     levelSetup();
+    levelStart(Date.now());
   },
   false
 );
-
-levelStart(Date.now());
 
 ReactDOM.render(
   <React.StrictMode>

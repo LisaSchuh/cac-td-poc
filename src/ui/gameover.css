@@ -1,0 +1,40 @@
+.gameover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gameover .gameover__text {
+  color: rgba(255, 255, 255, 1);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 1), 0 0 10px #72f1b8ff;
+  text-shadow: 0 0 2px #100c0f, 2px 2px 5px #dc078ee0, 0 0 5px white;
+  font-family: "neon80s";
+  font-size: 1.5em;
+  opacity: 1;
+  text-align: center;
+  height: 1.5em;
+}
+.gameover .gameover__text--big {
+  font-size: 3em;
+}
+
+.gameover .gameover__button {
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 2em;
+  color: white;
+  font-family: "neon80s";
+  flex: 0 0 auto;
+  width: 200px;
+  align-self: center;
+  margin: 2em;
+  border-radius: 5px;
+  border: 1px solid #e3e3e3;
+  background: linear-gradient(to bottom, #050831 0%, #e1035a);
+}

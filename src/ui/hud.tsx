@@ -14,7 +14,7 @@ export interface IHudButton {
 function Hud() {
   const [buttonToggleState, setButtonToggleState] = useState<boolean[]>([]);
   const [crystals, setCrystals] = useState<number>(0);
-  const [health, setHealth] = useState<number>(1000);
+  const [health, setHealth] = useState<number>(10);
 
   const actionBar: IHudButton[] = [
     {

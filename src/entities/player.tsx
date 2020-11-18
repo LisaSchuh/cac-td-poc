@@ -11,7 +11,6 @@ export const EPlayer = (): GameObject => {
     },
     logic: function (id: string, state: GameState) {
       this.physics.position = state.input.mousePosition;
-      console.log(this.physics.position.x);
       return state;
     },
     type: "PLAYER",
