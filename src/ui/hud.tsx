@@ -23,6 +23,18 @@ function Hud() {
         sendActionToggledEvent("placeTower", active);
       },
     },
+    {
+      text: "Buy Voicepad (200)",
+      action: (active) => {
+        sendActionToggledEvent("buyvoicepad", active);
+      },
+    },
+    {
+      text: "Buy Drums (500)",
+      action: (active) => {
+        sendActionToggledEvent("buydrums", active);
+      },
+    },
   ];
 
   useEffect(() => {
@@ -41,7 +53,9 @@ function Hud() {
     <>
       <div className="status-bar">
         <div className="status-bar__element">{`80's vibe ${health}`}</div>
-        <div className="status-bar__element">{`beats ${crystals}`}</div>
+        <div className="status-bar__element">{`beats ${Math.round(
+          crystals
+        )}`}</div>
       </div>
 
       <div className="action-bar">
